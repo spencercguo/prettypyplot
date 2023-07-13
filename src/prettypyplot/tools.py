@@ -37,12 +37,11 @@ def invert_sign(num):
     if isinstance(num, (float, int)):
         return -1 * num
     elif isinstance(num, str):
-        if num.startswith('-'):
+        if num.startswith("-"):
             return num[1:]
-        return '-{0}'.format(num)
+        return "-{0}".format(num)
     raise ValueError(
-        'Num needs to be numeric value or string, not ' +
-        '{0}.'.format(num),
+        "Num needs to be numeric value or string, not " + "{0}.".format(num),
     )
 
 
@@ -51,11 +50,9 @@ def parse_axes(*args, ax):
     axes = [arg for arg in args if isinstance(arg, mpl.axes.Axes)]
     if axes:
         if isinstance(ax, mpl.axes.Axes) or len(axes) > 1:
-            raise ValueError('Multiple axes provided')
+            raise ValueError("Multiple axes provided")
         ax = axes[0]
-        args = tuple(
-            arg for arg in args if not isinstance(arg, mpl.axes.Axes)
-        )
+        args = tuple(arg for arg in args if not isinstance(arg, mpl.axes.Axes))
     else:
         ax = gca(ax)
     return args, ax
@@ -76,8 +73,8 @@ def get_axes(axs):
     axs = np.ravel(axs)
     if not all((isinstance(arg, mpl.axes.Axes) for arg in axs)):
         raise TypeError(
-            'If `axs` is given, it needs to be of type matplotlib.axes.Axes.' +
-            ' or list of',
+            "If `axs` is given, it needs to be of type matplotlib.axes.Axes."
+            + " or list of",
         )
     return axs
 

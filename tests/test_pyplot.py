@@ -15,12 +15,15 @@ import prettypyplot
 
 
 @pytest.mark.mpl_image_compare(remove_text=True)
-@pytest.mark.parametrize('data, style, kwargs', (
-    (np.arange(25).reshape(-1, 5), 'default', {}),
-    (np.arange(25).reshape(-1, 5), 'default', {'zorder': 0}),
-    (np.arange(25).reshape(-1, 5), 'minimal', {}),
-    (np.arange(25).reshape(-1, 5), 'minimal', {'zorder': 0}),
-))
+@pytest.mark.parametrize(
+    "data, style, kwargs",
+    (
+        (np.arange(25).reshape(-1, 5), "default", {}),
+        (np.arange(25).reshape(-1, 5), "default", {"zorder": 0}),
+        (np.arange(25).reshape(-1, 5), "minimal", {}),
+        (np.arange(25).reshape(-1, 5), "minimal", {"zorder": 0}),
+    ),
+)
 def test_imshow(data, style, kwargs):
     """Test imshow."""
     prettypyplot.use_style(style=style)
@@ -39,12 +42,15 @@ def test_imshow(data, style, kwargs):
 
 
 @pytest.mark.mpl_image_compare(remove_text=True)
-@pytest.mark.parametrize('data, style, args, kwargs', (
-    ((np.arange(25), np.sin(np.arange(25))), 'default', (), {}),
-    ((np.arange(25), np.cos(np.arange(25))), 'default', ('bo', ), {}),
-    ((np.arange(25), np.sin(np.arange(25))), 'minimal', (), {}),
-    ((np.arange(25), np.cos(np.arange(25))), 'minimal', ('bo', ), {}),
-))
+@pytest.mark.parametrize(
+    "data, style, args, kwargs",
+    (
+        ((np.arange(25), np.sin(np.arange(25))), "default", (), {}),
+        ((np.arange(25), np.cos(np.arange(25))), "default", ("bo",), {}),
+        ((np.arange(25), np.sin(np.arange(25))), "minimal", (), {}),
+        ((np.arange(25), np.cos(np.arange(25))), "minimal", ("bo",), {}),
+    ),
+)
 def test_plot(data, style, args, kwargs):
     """Test imshow."""
     prettypyplot.use_style(style=style)
@@ -57,16 +63,19 @@ def test_plot(data, style, args, kwargs):
 
 
 @pytest.mark.mpl_image_compare(remove_text=True)
-@pytest.mark.parametrize('data, style, args, ylog', (
-    ((np.arange(25), np.arange(25)), 'default', (True, ), False),
-    ((np.arange(25), np.arange(25)), 'default', (), False),
-    ((np.arange(25), np.arange(25)), 'default', (False, ), False),
-    ((np.arange(25), 2 + np.arange(25)**2), 'default', (True, ), True),
-    ((np.arange(25), np.arange(25)), 'minimal', (True, ), False),
-    ((np.arange(25), np.arange(25)), 'minimal', (False, ), False),
-    ((np.arange(25), np.arange(25)), 'minimal', (), False),
-    ((np.arange(25), 2 + np.arange(25)**2), 'minimal', (True, ), True),
-))
+@pytest.mark.parametrize(
+    "data, style, args, ylog",
+    (
+        ((np.arange(25), np.arange(25)), "default", (True,), False),
+        ((np.arange(25), np.arange(25)), "default", (), False),
+        ((np.arange(25), np.arange(25)), "default", (False,), False),
+        ((np.arange(25), 2 + np.arange(25) ** 2), "default", (True,), True),
+        ((np.arange(25), np.arange(25)), "minimal", (True,), False),
+        ((np.arange(25), np.arange(25)), "minimal", (False,), False),
+        ((np.arange(25), np.arange(25)), "minimal", (), False),
+        ((np.arange(25), 2 + np.arange(25) ** 2), "minimal", (True,), True),
+    ),
+)
 def test_grid(data, style, args, ylog):
     """Test grid."""
     prettypyplot.use_style(style=style)
@@ -77,6 +86,6 @@ def test_grid(data, style, args, ylog):
     _ = prettypyplot.grid(*args)
 
     if ylog:
-        ax.set_yscale('log')
+        ax.set_yscale("log")
 
     return fig

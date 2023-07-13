@@ -272,4 +272,4 @@ CM_BOWNAIR_DATA = [
 
 
 def _bownair():
-    return clr.LinearSegmentedColormap.from_list('bownair', CM_BOWNAIR_DATA)
+    return clr.LinearSegmentedColormap.from_list("bownair", CM_BOWNAIR_DATA)

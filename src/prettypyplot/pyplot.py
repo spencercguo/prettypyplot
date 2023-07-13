@@ -39,8 +39,8 @@ def imshow(*args, ax=None, **kwargs):
     """
     args, ax = tools.parse_axes(*args, ax=ax)
 
-    if 'zorder' not in kwargs:
-        kwargs['zorder'] = 1
+    if "zorder" not in kwargs:
+        kwargs["zorder"] = 1
 
     # plot
     return ax.imshow(*args, **kwargs)
@@ -109,7 +109,7 @@ def savefig(fname, use_canvas_size=True, **kwargs):
         )
 
     with warnings.catch_warnings():
-        warnings.filterwarnings('ignore')
+        warnings.filterwarnings("ignore")
         fig.tight_layout()
 
     # convert figsize to canvas size
@@ -119,9 +119,9 @@ def savefig(fname, use_canvas_size=True, **kwargs):
         fig.set_size_inches(figsize)
 
     # save as pdf if not specified
-    if 'format' not in kwargs:
-        if path.splitext(fname)[1][1:] == '':
-            fname = '{0}.pdf'.format(fname)
+    if "format" not in kwargs:
+        if path.splitext(fname)[1][1:] == "":
+            fname = "{0}.pdf".format(fname)
 
     # save fig
     plt.savefig(fname, **kwargs)
@@ -138,13 +138,13 @@ def _reduce_ticks(fig):
         if len(axes.get_xticks()) > 4:
             axes.locator_params(
                 tight=False,
-                axis='x',
+                axis="x",
                 nbins=len(axes.get_xticks()) / tick_reduc,
             )
         if len(axes.get_yticks()) > 4:
             axes.locator_params(
                 tight=False,
-                axis='y',
+                axis="y",
                 nbins=len(axes.get_yticks()) / tick_reduc,
             )
 
@@ -152,23 +152,23 @@ def _reduce_ticks(fig):
 def _legend_default_kwargs():
     """Return default values of given outside positions."""
     return {
-        'top': {
-            'bbox_to_anchor': (0.0, 1.0, 1.0, 0.01),
-            'mode': 'expand',
-            'loc': 'lower left',
+        "top": {
+            "bbox_to_anchor": (0.0, 1.0, 1.0, 0.01),
+            "mode": "expand",
+            "loc": "lower left",
         },
-        'bottom': {
-            'bbox_to_anchor': (0.0, 0.0, 1.0, 0.01),
-            'mode': 'expand',
-            'loc': 'upper left',
+        "bottom": {
+            "bbox_to_anchor": (0.0, 0.0, 1.0, 0.01),
+            "mode": "expand",
+            "loc": "upper left",
         },
-        'right': {
-            'bbox_to_anchor': (1.03, 0.5),
-            'loc': 'center left',
+        "right": {
+            "bbox_to_anchor": (1.03, 0.5),
+            "loc": "center left",
         },
-        'left': {
-            'bbox_to_anchor': (-0.03, 0.5),
-            'loc': 'center right',
+        "left": {
+            "bbox_to_anchor": (-0.03, 0.5),
+            "loc": "center right",
         },
     }
 
@@ -209,8 +209,8 @@ def legend(*args, outside=False, ax=None, axs=None, **kwargs):
     default_kwargs = _legend_default_kwargs()
     if outside not in {False, *default_kwargs}:
         raise ValueError(
-            'Use for outside one of [False, {0}]'.format(
-                ', '.join(['"{0}"'.format(dr) for dr in default_kwargs]),
+            "Use for outside one of [False, {0}]".format(
+                ", ".join(['"{0}"'.format(dr) for dr in default_kwargs]),
             ),
         )
 
@@ -234,18 +234,18 @@ def legend(*args, outside=False, ax=None, axs=None, **kwargs):
     handles, labels = mlegend._get_legend_handles_labels(axs)  # noqa: WPS437
 
     # set number of ncol to the number of items
-    if outside in {'top', 'bottom'}:
-        kwargs.setdefault('ncol', len(labels))
+    if outside in {"top", "bottom"}:
+        kwargs.setdefault("ncol", len(labels))
 
     # generate legend
     leg = ax.legend(handles, labels, *args, **kwargs)
     if _pplt.STYLE == Style.MINIMAL:
         leg.get_frame().set_linewidth(0.0)
     elif _pplt.STYLE == Style.DEFAULT:
-        leg.get_frame().set_linewidth(plt.rcParams['axes.linewidth'])
+        leg.get_frame().set_linewidth(plt.rcParams["axes.linewidth"])
 
     # shift title to the left if on top or bottom
-    if outside in {'top', 'bottom'}:
+    if outside in {"top", "bottom"}:
         _shift_legend_title(leg)
 
     return leg
@@ -264,15 +264,15 @@ def _shift_legend_title(leg):
 def _opposite_side(pos):
     """Return opposite of 'top', 'bottom', 'left', 'right'."""
     opposite = {
-        'top': 'bottom',
-        'bottom': 'top',
-        'right': 'left',
-        'left': 'right',
+        "top": "bottom",
+        "bottom": "top",
+        "right": "left",
+        "left": "right",
     }
     if pos not in opposite:
         raise ValueError(
-            'Pos needs to be one of [{0}].'.format(
-                ', '.join('"{0}"'.format(position) for position in opposite),
+            "Pos needs to be one of [{0}].".format(
+                ", ".join('"{0}"'.format(position) for position in opposite),
             ),
         )
 
@@ -298,25 +298,26 @@ def activate_axis(position, ax=None):
         position = [position]
 
     # allowed values
-    positions = {'bottom', 'top', 'left', 'right'}
+    positions = {"bottom", "top", "left", "right"}
 
     # move axes ticks and labels to opposite side of position
     for pos in position:
         if pos not in positions:
             raise ValueError(
-                '{0:!r} is not a valid value for {1}; supported values are {2}'
-                .format(pos, 'position', ', '.join(positions))
+                "{0:!r} is not a valid value for {1}; supported values are {2}".format(
+                    pos, "position", ", ".join(positions)
+                )
             )
 
-        if pos in {'bottom', 'top'}:
+        if pos in {"bottom", "top"}:
             axis = ax.xaxis
-        elif pos in {'left', 'right'}:
+        elif pos in {"left", "right"}:
             axis = ax.yaxis
         axis.set_ticks_position(pos)
         axis.set_label_position(pos)
 
 
-def colorbar(im, width='7%', pad='0%', position='right', label=None, **kwargs):
+def colorbar(im, width="7%", pad="0%", position="right", label=None, **kwargs):
     """Generate colorbar of same height as image.
 
     Wrapper around pyplot.colorbar which corrects the height.
@@ -349,14 +350,14 @@ def colorbar(im, width='7%', pad='0%', position='right', label=None, **kwargs):
         [matplotlib.colorbar.Colorbar][] instance.
 
     """
-    orientation = 'vertical'
-    if position in {'top', 'bottom'}:
-        orientation = 'horizontal'
+    orientation = "vertical"
+    if position in {"top", "bottom"}:
+        orientation = "horizontal"
 
     # get axes
-    if hasattr(im, 'axes'):  # noqa: WPS421
+    if hasattr(im, "axes"):  # noqa: WPS421
         ax = im.axes
-    elif hasattr(im, 'ax'):  # noqa: WPS421
+    elif hasattr(im, "ax"):  # noqa: WPS421
         ax = im.ax
     else:
         ax = plt.gca()
@@ -399,22 +400,22 @@ def grid(*args, ax=None, **kwargs):
     # parse axes
     args, ax = tools.parse_axes(*args, ax=ax)
 
-    if 'visible' in kwargs:  # mpl >= 3.6
-        show_grid = kwargs['visible']
-    elif 'b' in kwargs:  # mpl <=3.5
-        show_grid = kwargs['b']
+    if "visible" in kwargs:  # mpl >= 3.6
+        show_grid = kwargs["visible"]
+    elif "b" in kwargs:  # mpl <=3.5
+        show_grid = kwargs["b"]
     else:
         boolargs = [arg for arg in args if isinstance(arg, bool)]
         show_grid = boolargs[0] if len(boolargs) >= 1 else True
 
     if _pplt.STYLE != Style.MINIMAL and show_grid:
-        gr_maj = ax.grid(show_grid, which='major', linestyle='--', **kwargs)
+        gr_maj = ax.grid(show_grid, which="major", linestyle="--", **kwargs)
         gr_min = ax.grid(
-            show_grid, which='minor', linestyle='dotted', **kwargs
+            show_grid, which="minor", linestyle="dotted", **kwargs
         )
     else:
-        gr_maj = ax.grid(False, which='major')
-        gr_min = ax.grid(False, which='minor')
+        gr_maj = ax.grid(False, which="major")
+        gr_min = ax.grid(False, which="minor")
 
     ax.set_axisbelow(True)
     return (gr_maj, gr_min)
@@ -422,29 +423,30 @@ def grid(*args, ax=None, **kwargs):
 
 def _xminmax(ax):
     """Get xrange of plotted data."""
-    return _minmax(lim=ax.get_xlim(), rcparam='axes.xmargin')
+    return _minmax(lim=ax.get_xlim(), rcparam="axes.xmargin")
 
 
 def _yminmax(ax):
     """Get yrange of plotted data."""
-    return _minmax(lim=ax.get_ylim(), rcparam='axes.ymargin')
+    return _minmax(lim=ax.get_ylim(), rcparam="axes.ymargin")
 
 
 def _minmax(lim, rcparam):
     """Get range of plotted data."""
     width = lim[1] - lim[0]
     margin = plt.rcParams[rcparam]
-    return lim[0] + np.array([  # min max
-        (margin + idx) / (1 + 2 * margin) * width
-        for idx in (0, 1)
-    ])
+    return lim[0] + np.array(
+        [
+            (margin + idx) / (1 + 2 * margin) * width for idx in (0, 1)
+        ]  # min max
+    )
 
 
 def _set_spine_bounds(ax):
     """Limit spines to data range, keeping ticks unchanged."""
     for minmax, ticks, poss in (
-        (_xminmax(ax), ax.get_xticks(), ('bottom', 'top')),
-        (_yminmax(ax), ax.get_yticks(), ('left', 'right')),
+        (_xminmax(ax), ax.get_xticks(), ("bottom", "top")),
+        (_yminmax(ax), ax.get_yticks(), ("left", "right")),
     ):
         if ticks.size:
             for pos in poss:

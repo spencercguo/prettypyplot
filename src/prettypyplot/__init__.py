@@ -28,20 +28,20 @@ STYLE = None
 STYLE_DICT = {}
 
 __all__ = [  # noqa: F405
-    'setup_pyplot',
-    'update_style',
-    'use_style',
-    'add_contour',
-    'text',
-    'figtext',
-    'hide_empty_axes',
-    'label_outer',
-    'subplot_labels',
-    'load_cmaps',
-    'load_colors',
-    'categorical_cmaps',
-    'categorical_color',
-    'text_color',
+    "setup_pyplot",
+    "update_style",
+    "use_style",
+    "add_contour",
+    "text",
+    "figtext",
+    "hide_empty_axes",
+    "label_outer",
+    "subplot_labels",
+    "load_cmaps",
+    "load_colors",
+    "categorical_cmaps",
+    "categorical_color",
+    "text_color",
 ]
 
 from .colors import *
@@ -53,8 +53,8 @@ from .pyplot import (
     colorbar,
     grid,
 )
-from .style import (setup_pyplot, update_style, use_style)
-from .texts import (add_contour, figtext, text)
-from .subplots import (hide_empty_axes, label_outer, subplot_labels)
+from .style import setup_pyplot, update_style, use_style
+from .texts import add_contour, figtext, text
+from .subplots import hide_empty_axes, label_outer, subplot_labels
 
-__version__ = '0.10.0'
+__version__ = "0.10.0"

@@ -270,4 +270,4 @@ CM_TURBO_DATA = [
 
 
 def _turbo():
-    return clr.LinearSegmentedColormap.from_list('turbo', CM_TURBO_DATA)
+    return clr.LinearSegmentedColormap.from_list("turbo", CM_TURBO_DATA)

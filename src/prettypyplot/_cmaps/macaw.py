@@ -272,4 +272,4 @@ CM_MACAW_DATA = [
 
 
 def _macaw():
-    return clr.LinearSegmentedColormap.from_list('macaw', CM_MACAW_DATA)
+    return clr.LinearSegmentedColormap.from_list("macaw", CM_MACAW_DATA)

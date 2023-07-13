@@ -14,21 +14,64 @@ from prettypyplot import _cmaps as cmaps
 def test_bownair():
     """Test bownair cmap."""
     assert isinstance(
-        cmaps.bownair._bownair(), LinearSegmentedColormap,
+        cmaps.bownair._bownair(),
+        LinearSegmentedColormap,
     )
 
 
 def test_macaw():
     """Test macaw cmap."""
     assert isinstance(
-        cmaps.macaw._macaw(), LinearSegmentedColormap,
+        cmaps.macaw._macaw(),
+        LinearSegmentedColormap,
     )
 
 
 def test_turbo():
     """Test turbo cmap."""
     assert isinstance(
-        cmaps.turbo._turbo(), LinearSegmentedColormap,
+        cmaps.turbo._turbo(),
+        LinearSegmentedColormap,
+    )
+
+
+def test_sunset():
+    """Test sunset cmap."""
+    assert isinstance(
+        cmaps.sunset._sunset(),
+        LinearSegmentedColormap,
+    )
+
+
+def test_nightfall():
+    """Test nightfall cmap."""
+    assert isinstance(
+        cmaps.nightfall._nightfall(),
+        LinearSegmentedColormap,
+    )
+
+
+def test_ylorbr():
+    """Test ylorbr cmap."""
+    assert isinstance(
+        cmaps.ylorbr._ylorbr(),
+        LinearSegmentedColormap,
+    )
+
+
+def test_iridescent():
+    """Test iridescent cmap."""
+    assert isinstance(
+        cmaps.iridescent._iridescent(),
+        LinearSegmentedColormap,
+    )
+
+
+def test_incandescent():
+    """Test incandescent cmap."""
+    assert isinstance(
+        cmaps.incandescent._incandescent(),
+        LinearSegmentedColormap,
     )
 
 

@@ -30,7 +30,7 @@ def hide_empty_axes(axs=None):
     # loop over all axes and hide empty ones
     for ax in axs:
         if _is_empty_axes(ax):
-            ax.axis('off')
+            ax.axis("off")
 
     # in case of shared axes, activate outer tick labels
     _activate_outer_ticks(axs)
@@ -41,9 +41,9 @@ def _activate_outer_ticks(axs):
     for ax in axs:
         left_empty, bottom_empty = _is_outer_hidden(axs, ax)
         if left_empty:
-            ax.tick_params(axis='y', reset=True)
+            ax.tick_params(axis="y", reset=True)
         if bottom_empty:
-            ax.tick_params(axis='x', reset=True)
+            ax.tick_params(axis="x", reset=True)
 
 
 def label_outer(axs=None):
@@ -63,22 +63,22 @@ def label_outer(axs=None):
         axs = tools.get_axes(axs)
         if not all((_is_subplot_axes(arg) for arg in axs)):
             raise TypeError(
-                'axs needs to be of type matplotlib.axes.AxesSuplot.',
+                "axs needs to be of type matplotlib.axes.AxesSuplot.",
             )
     else:
         axs = [ax for ax in plt.gcf().get_axes() if _is_subplot_axes(ax)]
 
     for ax in axs:
         ss = ax.get_subplotspec()
-        if hasattr(ss, 'is_last_row'):  # pragma: no cover # noqa: WPS421
+        if hasattr(ss, "is_last_row"):  # pragma: no cover # noqa: WPS421
             # for mpl >= 3.4
             lastrow = ss.is_last_row()
             firstcol = ss.is_first_col()
-        elif hasattr(ax, 'is_last_row'):  # pragma: no cover # noqa: WPS421
+        elif hasattr(ax, "is_last_row"):  # pragma: no cover # noqa: WPS421
             lastrow = ax.is_last_row()
             firstcol = ax.is_first_col()
         else:
-            raise TypeError(f'{ax!r} is not a valid axes.')
+            raise TypeError(f"{ax!r} is not a valid axes.")
 
         # check if axes below, left is hidden
         left_empty, bottom_empty = _is_outer_hidden(axs, ax)
@@ -87,10 +87,9 @@ def label_outer(axs=None):
 
 def _is_subplot_axes(ax):
     """Check is is subplot axes."""
-    return (
-        isinstance(ax, mpl.axes.Axes) and
-        hasattr(ax, 'get_subplotspec')  # noqa: WPS421
-    )
+    return isinstance(ax, mpl.axes.Axes) and hasattr(
+        ax, "get_subplotspec"
+    )  # noqa: WPS421
 
 
 def _is_outer_hidden(axs, ax):
@@ -120,35 +119,37 @@ def _has_neighbor_distance(ax1, ax2, row_offset=0, col_offset=0):
         return False
 
     ss1, ss2 = ax1.get_subplotspec(), ax2.get_subplotspec()
-    return (
-        any((
-            row + row_offset in list(ss2.rowspan) for row in list(ss1.rowspan)
-        )) and any((
-            col + col_offset in list(ss2.colspan) for col in list(ss1.colspan)
-        ))
+    return any(
+        (row + row_offset in list(ss2.rowspan) for row in list(ss1.rowspan))
+    ) and any(
+        (col + col_offset in list(ss2.colspan) for col in list(ss1.colspan))
     )
 
 
 def _label_outer(ax, lastrow, firstcol):
     """See mpl.axes.Axes.label_outer()."""
     if not lastrow:
-        for xlabel in ax.get_xticklabels(which='both'):
+        for xlabel in ax.get_xticklabels(which="both"):
             xlabel.set_visible(False)
         ax.xaxis.get_offset_text().set_visible(False)
-        ax.set_xlabel('')
+        ax.set_xlabel("")
     if not firstcol:
-        for ylabel in ax.get_yticklabels(which='both'):
+        for ylabel in ax.get_yticklabels(which="both"):
             ylabel.set_visible(False)
         ax.yaxis.get_offset_text().set_visible(False)
-        ax.set_ylabel('')
+        ax.set_ylabel("")
 
 
 def _is_empty_axes(ax):
     """Return if axes is empty."""
-    return (
-        not any([
-            ax.lines, ax.collections, ax.patches, ax.texts, ax.images,
-        ])
+    return not any(
+        [
+            ax.lines,
+            ax.collections,
+            ax.patches,
+            ax.texts,
+            ax.images,
+        ]
     )
 
 
@@ -191,10 +192,10 @@ def _subplot_labels(fig, xlabel, ylabel):
 
     # hide axes
     ax.tick_params(
-        labelcolor='none',
-        color='none',
+        labelcolor="none",
+        color="none",
         grid_alpha=0,
-        which='both',
+        which="both",
         top=False,
         bottom=False,
         left=False,
@@ -206,7 +207,7 @@ def _subplot_labels(fig, xlabel, ylabel):
     # removed
     ax.set_xticks([0])
     # remove ticks
-    ax.xaxis.set_ticks_position('none')
+    ax.xaxis.set_ticks_position("none")
 
     ax.grid(False)
     if xlabel is not None:

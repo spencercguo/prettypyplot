@@ -28,6 +28,13 @@ from prettypyplot._cmaps.discrete import (
     _ufcd,
 )
 from prettypyplot._cmaps.macaw import _macaw
+from prettypyplot._cmaps.tol_continuous import (
+    _sunset,
+    _nightfall,
+    _ylorbr,
+    _iridescent,
+    _incandescent,
+)
 from prettypyplot._cmaps.tol_discrete import (
     _tol_bright,
     _tol_high_contrast,
@@ -41,20 +48,20 @@ from prettypyplot.tools import is_number
 
 
 # ~~~ COLORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-class GrayTones(namedtuple('GrayTones', 'dark light')):
+class GrayTones(namedtuple("GrayTones", "dark light")):
     """Class for holding light and dark gray tone."""
 
 
-black_grays = GrayTones('#000000', '#dddfe5')
-black_grays_darkmode = GrayTones('#ffffff', '#22201a')
-default_grays = GrayTones('#4d4f53', '#dddfe5')
-default_grays_darkmode = GrayTones('#b2b0ac', '#22201a')
+black_grays = GrayTones("#000000", "#dddfe5")
+black_grays_darkmode = GrayTones("#ffffff", "#22201a")
+default_grays = GrayTones("#4d4f53", "#dddfe5")
+default_grays_darkmode = GrayTones("#b2b0ac", "#22201a")
 
 
 # ~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def _get_cmap(cmap):
     """Wrapper for get_cmap with mpl <=3.6 and >=3.7."""
-    if hasattr(mpl, 'colormaps') and hasattr(mpl.colormaps, 'get_cmap'):
+    if hasattr(mpl, "colormaps") and hasattr(mpl.colormaps, "get_cmap"):
         mpl.colormaps.get_cmap(cmap)
     else:
         mpl.cm.get_cmap(cmap)
@@ -62,7 +69,7 @@ def _get_cmap(cmap):
 
 def _register_cmap(cmap):
     """Wrapper for register_cmap with mpl <=3.6 and >=3.7."""
-    if hasattr(mpl, 'colormaps') and hasattr(mpl.colormaps, 'register'):
+    if hasattr(mpl, "colormaps") and hasattr(mpl.colormaps, "register"):
         mpl.colormaps.register(cmap)
     else:
         mpl.cm.register_cmap(cmap=cmap)
@@ -94,6 +101,11 @@ def load_cmaps():
         _pastel_spring(),
         _paula(),
         _summertimes(),
+        _sunset(),
+        _nightfall(),
+        _ylorbr(),
+        _iridescent(),
+        _incandescent(),
         _tol_bright(),
         _tol_high_contrast(),
         _tol_light(),
@@ -129,18 +141,18 @@ def load_colors():
     """
     # register own colors
     pplt_colors = {
-        'pplt:blue': _pastel5().colors[0],
-        'pplt:red': _pastel5().colors[1],
-        'pplt:green': _pastel5().colors[2],
-        'pplt:orange': _pastel5().colors[3],
-        'pplt:lightblue': _pastel5().colors[4],
-        'pplt:gray': default_grays.dark,
-        'pplt:grey': default_grays.dark,
-        'pplt:lightgray': default_grays.light,
-        'pplt:lightgrey': default_grays.light,
-        'pplt:axes': plt.rcParams['axes.edgecolor'],
-        'pplt:text': plt.rcParams['text.color'],
-        'pplt:grid': plt.rcParams['grid.color'],
+        "pplt:blue": _pastel5().colors[0],
+        "pplt:red": _pastel5().colors[1],
+        "pplt:green": _pastel5().colors[2],
+        "pplt:orange": _pastel5().colors[3],
+        "pplt:lightblue": _pastel5().colors[4],
+        "pplt:gray": default_grays.dark,
+        "pplt:grey": default_grays.dark,
+        "pplt:lightgray": default_grays.light,
+        "pplt:lightgrey": default_grays.light,
+        "pplt:axes": plt.rcParams["axes.edgecolor"],
+        "pplt:text": plt.rcParams["text.color"],
+        "pplt:grid": plt.rcParams["grid.color"],
     }
     clr._colors_full_map.update(pplt_colors)  # noqa: WPS437
 
@@ -173,10 +185,18 @@ def categorical_cmap(nc, nsc, *, cmap=None, return_colors=False):
     """
     # check correct data type
     _is_number_in_range(
-        nc, name='nc', dtype=int, low=1, high=np.iinfo(int).max,
+        nc,
+        name="nc",
+        dtype=int,
+        low=1,
+        high=np.iinfo(int).max,
     )
     _is_number_in_range(
-        nsc, name='nsc', dtype=int, low=1, high=np.iinfo(int).max,
+        nsc,
+        name="nsc",
+        dtype=int,
+        low=1,
+        high=np.iinfo(int).max,
     )
     nc, nsc = int(nc), int(nsc)
 
@@ -185,10 +205,10 @@ def categorical_cmap(nc, nsc, *, cmap=None, return_colors=False):
         cmap = plt.get_cmap(cmap)
     else:
         cmap = clr.ListedColormap(
-            plt.rcParams['axes.prop_cycle'].by_key()['color'],
+            plt.rcParams["axes.prop_cycle"].by_key()["color"],
         )
     if nc > cmap.N:
-        raise ValueError('Too many categories for colormap.')
+        raise ValueError("Too many categories for colormap.")
 
     # extract colors from cmap
     if isinstance(cmap, clr.LinearSegmentedColormap):
@@ -233,7 +253,11 @@ def categorical_color(nsc, color, *, return_hex=False):
     # check correct data type
     color = clr.to_rgb(color)
     _is_number_in_range(
-        nsc, name='nsc', dtype=int, low=1, high=np.iinfo(int).max,
+        nsc,
+        name="nsc",
+        dtype=int,
+        low=1,
+        high=np.iinfo(int).max,
     )
     nsc = int(nsc)
 
@@ -253,7 +277,7 @@ def categorical_color(nsc, color, *, return_hex=False):
     return colors_rgb
 
 
-def text_color(bgcolor, colors=('#000000', '#ffffff')):
+def text_color(bgcolor, colors=("#000000", "#ffffff")):
     """Select textcolor with maximal contrast on background.
 
     All parameters needs to be colors accepted by matplotlib, see
@@ -294,13 +318,13 @@ def _channel_transf(channel):
     """Transform channel for luminance calculation."""
     if channel < 0.03928:
         return channel / 12.92
-    return ((channel + 0.055) / 1.055)**2.4
+    return ((channel + 0.055) / 1.055) ** 2.4
 
 
 def _relative_luminance(color):
     """Calculate luminance from rgb color, each channel [0, 1]."""
     for rgbc in color:
-        _is_number_in_range(rgbc, name='RGB channel')
+        _is_number_in_range(rgbc, name="RGB channel")
     rgb = np.array([_channel_transf(channel) for channel in color])
     rgb_weights = np.array([0.2126, 0.7152, 0.0722])
     return np.sum(rgb_weights * rgb)
@@ -309,7 +333,7 @@ def _relative_luminance(color):
 def _contrast(L1, L2):
     """L1 and L2 should be luminances [0, 1]."""
     for lum in (L1, L2):
-        _is_number_in_range(lum, name='Luminace')
+        _is_number_in_range(lum, name="Luminace")
     L1, L2 = float(L1), float(L2)
 
     L_offset = 0.05
@@ -318,18 +342,18 @@ def _contrast(L1, L2):
     return (L1 + L_offset) / (L2 + L_offset)
 
 
-def _is_number_in_range(num, *, dtype=float, name='Variable', low=0, high=1):
+def _is_number_in_range(num, *, dtype=float, name="Variable", low=0, high=1):
     """Check if number is in range [low, high]."""
     if not is_number(num, dtype=dtype):
         raise TypeError(
-            '{0} needs to be {1} but given '.format(name, dtype.__name__) +
-            '{num}'.format(num=num),
+            "{0} needs to be {1} but given ".format(name, dtype.__name__)
+            + "{num}".format(num=num),
         )
     num = dtype(num)
     if num < low or num > high:
         raise ValueError(
-            '{name} needs to be within [{low}'.format(name=name, low=low) +
-            ', {high}] but given {num}'.format(high=high, num=num),
+            "{name} needs to be within [{low}".format(name=name, low=low)
+            + ", {high}] but given {num}".format(high=high, num=num),
         )
 
 

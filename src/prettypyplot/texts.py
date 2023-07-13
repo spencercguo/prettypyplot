@@ -39,10 +39,10 @@ def text(x, y, s, *, contour=None, ax=None, **kwargs):
     ax = tools.gca(ax)
 
     # change default alignment
-    if 'va' not in kwargs and 'verticalalignment' not in kwargs:
-        kwargs['va'] = 'center'
-    if 'ha' not in kwargs and 'horizontalalignment' not in kwargs:
-        kwargs['ha'] = 'center'
+    if "va" not in kwargs and "verticalalignment" not in kwargs:
+        kwargs["va"] = "center"
+    if "ha" not in kwargs and "horizontalalignment" not in kwargs:
+        kwargs["ha"] = "center"
 
     # plot text
     txt = ax.text(x=x, y=y, s=s, **kwargs)
@@ -80,10 +80,10 @@ def figtext(x, y, s, *, contour=None, **kwargs):
 
     """
     # change default alignment
-    if 'va' not in kwargs and 'verticalalignment' not in kwargs:
-        kwargs['va'] = 'center'
-    if 'ha' not in kwargs and 'horizontalalignment' not in kwargs:
-        kwargs['ha'] = 'center'
+    if "va" not in kwargs and "verticalalignment" not in kwargs:
+        kwargs["va"] = "center"
+    if "ha" not in kwargs and "horizontalalignment" not in kwargs:
+        kwargs["ha"] = "center"
 
     # plot text
     txt = plt.figtext(x=x, y=y, s=s, **kwargs)
@@ -97,7 +97,7 @@ def figtext(x, y, s, *, contour=None, **kwargs):
     return txt
 
 
-def add_contour(txt, contourwidth, contourcolor='w'):
+def add_contour(txt, contourwidth, contourcolor="w"):
     r"""Draw contour around txt.
 
     Parameters
@@ -114,25 +114,28 @@ def add_contour(txt, contourwidth, contourcolor='w'):
     # check if is text object
     if not isinstance(txt, mpl.text.Text):
         raise TypeError(
-            'txt needs to be "matplotlib.text.Text", but ' +
-            'is {t}'.format(t=txt),
+            'txt needs to be "matplotlib.text.Text", but '
+            + "is {t}".format(t=txt),
         )
     # check if number
     if not tools.is_number(contourwidth):
         raise TypeError(
-            'contourwidth={w} needs to be a number.'.format(w=contourwidth),
+            "contourwidth={w} needs to be a number.".format(w=contourwidth),
         )
 
     # check if color
     if not clr.is_color_like(contourcolor):
         raise TypeError(
-            'contourcolor={c} can not be '.format(c=contourcolor) +
-            'interpreted as color.',
+            "contourcolor={c} can not be ".format(c=contourcolor)
+            + "interpreted as color.",
         )
 
-    path_args = [path_effects.withStroke(
-        linewidth=contourwidth, foreground=contourcolor,
-    )]
+    path_args = [
+        path_effects.withStroke(
+            linewidth=contourwidth,
+            foreground=contourcolor,
+        )
+    ]
     txt.set_path_effects(path_args)
 
 
@@ -141,19 +144,19 @@ def _parse_contour(contour):
     if isinstance(contour, bool) and int(contour) in {0, 1}:
         if contour:
             return {
-                'contourwidth': plt.rcParams['lines.linewidth'],
-                'contourcolor': 'w',
+                "contourwidth": plt.rcParams["lines.linewidth"],
+                "contourcolor": "w",
             }
         return None
     elif isinstance(contour, (list, tuple)) and len(contour) == 2:
         lw, lc = contour
         if not clr.is_color_like(lc):
             raise ValueError(
-                'contourcolor={c} can not be '.format(c=lc) +
-                'interpreted as color.',
+                "contourcolor={c} can not be ".format(c=lc)
+                + "interpreted as color.",
             )
-        return {'contourwidth': lw, 'contourcolor': lc}
+        return {"contourwidth": lw, "contourcolor": lc}
     raise TypeError(
-        'contour needs to be a boolean or a tuple/list, but given was: ' +
-        '{c}.'.format(c=contour),
+        "contour needs to be a boolean or a tuple/list, but given was: "
+        + "{c}.".format(c=contour),
     )

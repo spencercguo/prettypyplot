@@ -19,6 +19,7 @@ from prettypyplot import colors as pclr
 # ~~~ CONSTANTS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 class Style(Enum):
     """Enum for all styles defined in pplt."""
+
     DEFAULT = auto()
     # default style, good for scientific usage
     MINIMAL = auto()
@@ -34,6 +35,7 @@ class Style(Enum):
 
 class Mode(Enum):
     """Enum for all modes defined in pplt."""
+
     DEFAULT = auto()
     # default font size, good for monitor use
     PRINT = auto()
@@ -149,16 +151,16 @@ def update_style(
 
     # set style variables in dictionary
     for key, val in (
-        ('interactive', interactive),
-        ('colors', colors),
-        ('cmap', cmap),
-        ('ncs', ncs),
-        ('figsize', figsize),
-        ('figratio', figratio),
-        ('ipython', ipython),
-        ('true_black', true_black),
-        ('latex', latex),
-        ('sf', sf),
+        ("interactive", interactive),
+        ("colors", colors),
+        ("cmap", cmap),
+        ("ncs", ncs),
+        ("figsize", figsize),
+        ("figratio", figratio),
+        ("ipython", ipython),
+        ("true_black", true_black),
+        ("latex", latex),
+        ("sf", sf),
     ):
         if val is not None:
             _pplt.STYLE_DICT[key] = val
@@ -167,13 +169,16 @@ def update_style(
         _reset_style()
     else:
         # load static rcParams
-        _apply_style('stylelib/default.mplstyle')
+        _apply_style("stylelib/default.mplstyle")
         if _pplt.STYLE is Style.MINIMAL:
-            _apply_style('stylelib/minimal.mplstyle')
+            _apply_style("stylelib/minimal.mplstyle")
 
         # set color cycle and cmap
         _set_rc_colors(
-            colors=colors, cmap=cmap, ncs=ncs, true_black=true_black,
+            colors=colors,
+            cmap=cmap,
+            ncs=ncs,
+            true_black=true_black,
         )
 
         # set figsize
@@ -189,7 +194,7 @@ def update_style(
         # setup LaTeX font
         # plt.style.use can not be used.
         if latex:
-            _apply_style('stylelib/latex.mplstyle')
+            _apply_style("stylelib/latex.mplstyle")
 
         if sf:
             _set_rc_sansserif()
@@ -202,11 +207,11 @@ def update_style(
 @copy_doc_params(update_style)
 def use_style(
     interactive=None,
-    colors='pastel5',
-    cmap='macaw',
+    colors="pastel5",
+    cmap="macaw",
     ncs=10,
     figsize=(3,),
-    figratio='golden',
+    figratio="golden",
     mode=_pplt.MODE,
     style=_pplt.STYLE,
     ipython=False,
@@ -251,15 +256,17 @@ def use_style(
 
 @copy_doc_params(update_style)
 @deprecated(
-    msg=r'Use prettypyplot.use_style instead.', since='0.4', remove='0.11',
+    msg=r"Use prettypyplot.use_style instead.",
+    since="0.4",
+    remove="0.11",
 )
 def setup_pyplot(
     ssh=None,
-    colors='pastel5',
-    cmap='macaw',
+    colors="pastel5",
+    cmap="macaw",
     ncs=10,
     figsize=(3,),
-    figratio='golden',
+    figratio="golden",
     mode=_pplt.MODE,
     style=_pplt.STYLE,
     ipython=False,
@@ -300,19 +307,20 @@ def _set_rc_colors(colors, cmap, true_black, ncs):
     # set color cycle and cmap
     if colors is not None or ncs is not None:
         # use values of previous call in case of None
-        colors = colors if colors is not None else _pplt.STYLE_DICT['colors']
-        ncs = ncs if ncs is not None else _pplt.STYLE_DICT['ncs']
+        colors = colors if colors is not None else _pplt.STYLE_DICT["colors"]
+        ncs = ncs if ncs is not None else _pplt.STYLE_DICT["ncs"]
 
         clrs = plt.get_cmap(colors)
-        plt.rcParams['axes.prop_cycle'] = plt.cycler(
+        plt.rcParams["axes.prop_cycle"] = plt.cycler(
             color=(
-                clrs.colors if tools.is_discrete_cmap(colors) else
-                clrs(np.linspace(0, 1, ncs))
+                clrs.colors
+                if tools.is_discrete_cmap(colors)
+                else clrs(np.linspace(0, 1, ncs))
             ),
         )
 
     if cmap is not None:
-        plt.rcParams['image.cmap'] = cmap
+        plt.rcParams["image.cmap"] = cmap
 
     if true_black is not None:
         # change default colors
@@ -321,15 +329,17 @@ def _set_rc_colors(colors, cmap, true_black, ncs):
         else:
             grays = pclr.default_grays
 
-        plt.rcParams.update({
-            'axes.edgecolor': grays.dark,
-            'axes.labelcolor': grays.dark,
-            'text.color': grays.dark,
-            'patch.edgecolor': grays.dark,
-            'xtick.color': grays.dark,
-            'ytick.color': grays.dark,
-            'grid.color': grays.light,
-        })
+        plt.rcParams.update(
+            {
+                "axes.edgecolor": grays.dark,
+                "axes.labelcolor": grays.dark,
+                "text.color": grays.dark,
+                "patch.edgecolor": grays.dark,
+                "xtick.color": grays.dark,
+                "ytick.color": grays.dark,
+                "grid.color": grays.light,
+            }
+        )
 
 
 def _set_rc_figsize(figratio, figsize):
@@ -338,7 +348,7 @@ def _set_rc_figsize(figratio, figsize):
     figsize = _parse_figsize(figsize, figratio)
 
     if figsize is not None:
-        plt.rcParams['figure.figsize'] = figsize
+        plt.rcParams["figure.figsize"] = figsize
 
 
 def _set_rc_widths(mode):
@@ -347,71 +357,73 @@ def _set_rc_widths(mode):
     if scales is not None:
         for scale, rcParamsVal in [
             [
-                'small_scale',
+                "small_scale",
                 [
-                    ['axes.linewidth', 0.8],
-                    ['grid.linewidth', 0.8],
-                    ['xtick.major.width', 0.8],
-                    ['xtick.minor.width', 0.6],
+                    ["axes.linewidth", 0.8],
+                    ["grid.linewidth", 0.8],
+                    ["xtick.major.width", 0.8],
+                    ["xtick.minor.width", 0.6],
                 ],
             ],
             [
-                'tick_scale',
+                "tick_scale",
                 [
-                    ['xtick.major.size', 3.5],
-                    ['xtick.minor.size', 2.0],
-                    ['xtick.major.pad', 3.5],
-                    ['xtick.minor.pad', 3.4],
+                    ["xtick.major.size", 3.5],
+                    ["xtick.minor.size", 2.0],
+                    ["xtick.major.pad", 3.5],
+                    ["xtick.minor.pad", 3.4],
                 ],
             ],
             [
-                'medium_scale',
+                "medium_scale",
                 [
-                    ['patch.linewidth', 1.0],
-                    ['hatch.linewidth', 1.0],
-                    ['boxplot.flierprops.markeredgewidth', 1.0],
-                    ['boxplot.flierprops.linewidth', 1.0],
-                    ['boxplot.boxprops.linewidth', 1.0],
-                    ['boxplot.whiskerprops.linewidth', 1.0],
-                    ['boxplot.capprops.linewidth', 1.0],
-                    ['boxplot.medianprops.linewidth', 1.0],
-                    ['boxplot.meanprops.linewidth', 1.0],
-                    ['lines.markeredgewidth', 1.0],
+                    ["patch.linewidth", 1.0],
+                    ["hatch.linewidth", 1.0],
+                    ["boxplot.flierprops.markeredgewidth", 1.0],
+                    ["boxplot.flierprops.linewidth", 1.0],
+                    ["boxplot.boxprops.linewidth", 1.0],
+                    ["boxplot.whiskerprops.linewidth", 1.0],
+                    ["boxplot.capprops.linewidth", 1.0],
+                    ["boxplot.medianprops.linewidth", 1.0],
+                    ["boxplot.meanprops.linewidth", 1.0],
+                    ["lines.markeredgewidth", 1.0],
                 ],
             ],
             [
-                'large_scale',
+                "large_scale",
                 [
-                    ['lines.linewidth', 1.5],
-                    ['boxplot.whiskers', 1.5],
-                    ['lines.markersize', 6],
+                    ["lines.linewidth", 1.5],
+                    ["boxplot.whiskers", 1.5],
+                    ["lines.markersize", 6],
                 ],
             ],
-            ['fontsize', [['font.size', 1]]],
+            ["fontsize", [["font.size", 1]]],
         ]:
             scale = scales[scale]
             for rcParam, val in rcParamsVal:
                 plt.rcParams[rcParam] = scale * val
                 # apply all changes to yticks as well
-                if rcParam.startswith('xtick'):
-                    plt.rcParams[
-                        'y{0}'.format(rcParam[1:])
-                    ] = plt.rcParams[rcParam]
+                if rcParam.startswith("xtick"):
+                    plt.rcParams["y{0}".format(rcParam[1:])] = plt.rcParams[
+                        rcParam
+                    ]
 
 
 def _set_rc_dpi(ipython, dpi=384):
     """Set rcParams dpi."""
     if ipython is not None and not ipython:
-        plt.rcParams['figure.dpi'] = dpi
+        plt.rcParams["figure.dpi"] = dpi
 
 
 def _set_rc_sansserif():
     """Set sans serif font."""
-    plt.rcParams.update({
-        'font.family': 'sans-serif',
-        'font.sans-serif': 'Helvetica',
-    })
-    plt.rcParams['text.latex.preamble'] += r'\usepackage[helvet]{sfmath}'
+    plt.rcParams.update(
+        {
+            "font.family": "sans-serif",
+            "font.sans-serif": "Helvetica",
+        }
+    )
+    plt.rcParams["text.latex.preamble"] += r"\usepackage[helvet]{sfmath}"
 
 
 def _set_ineractive_mode(interactive):
@@ -427,32 +439,32 @@ def _get_scale(mode: Mode):
     """Get the scaling factors."""
     scale_dict = {
         Mode.DEFAULT: {
-            'large_scale': 1.0,
-            'medium_scale': 1.0,
-            'small_scale': 1.0,
-            'tick_scale': 1.0,
-            'fontsize': 10.0,
+            "large_scale": 1.0,
+            "medium_scale": 1.0,
+            "small_scale": 1.0,
+            "tick_scale": 1.0,
+            "fontsize": 10.0,
         },
         Mode.PRINT: {
-            'large_scale': 1.5,
-            'medium_scale': 1.7,
-            'small_scale': 1.7,
-            'tick_scale': 1.7,
-            'fontsize': 12.0,
+            "large_scale": 1.5,
+            "medium_scale": 1.7,
+            "small_scale": 1.7,
+            "tick_scale": 1.7,
+            "fontsize": 12.0,
         },
         Mode.POSTER: {
-            'large_scale': 4.0,
-            'medium_scale': 4.0,
-            'small_scale': 4.0,
-            'tick_scale': 4.0,
-            'fontsize': 28.0,
+            "large_scale": 4.0,
+            "medium_scale": 4.0,
+            "small_scale": 4.0,
+            "tick_scale": 4.0,
+            "fontsize": 28.0,
         },
         Mode.BEAMER: {
-            'large_scale': 4.0,
-            'medium_scale': 4.0,
-            'small_scale': 4.0,
-            'tick_scale': 4.0,
-            'fontsize': 28.0,
+            "large_scale": 4.0,
+            "medium_scale": 4.0,
+            "small_scale": 4.0,
+            "tick_scale": 4.0,
+            "fontsize": 28.0,
         },
     }
     return scale_dict.get(mode, scale_dict[Mode.DEFAULT])
@@ -487,19 +499,19 @@ def _parse_figratio(figratio):
 
     """
     if figratio is None:
-        figratio = _pplt.STYLE_DICT['figratio']
+        figratio = _pplt.STYLE_DICT["figratio"]
     elif tools.is_number(figratio):
         figratio = float(figratio)
     else:
         figratios = {
-            'sqrt(2)': np.sqrt(2),
-            'sqrt(3)': np.sqrt(3),
-            'golden': (1 + np.sqrt(5)) / 2,
+            "sqrt(2)": np.sqrt(2),
+            "sqrt(3)": np.sqrt(3),
+            "golden": (1 + np.sqrt(5)) / 2,
         }
         if figratio not in figratios:
             raise ValueError(
-                'figratio needs to be an numeric value or one of [' +
-                '{0}].'.format(', '.join(figratios.keys())),
+                "figratio needs to be an numeric value or one of ["
+                + "{0}].".format(", ".join(figratios.keys())),
             )
         figratio = figratios.get(figratio, None)
     return figratio
@@ -527,8 +539,8 @@ def _parse_figsize(figsize, figratio):
         sizetuple = None
     elif len(figsize) == 1 and figratio is None:
         raise ValueError(
-            'using single value for `figsize` requires `figratio` but was not'
-            ' specified yet.',
+            "using single value for `figsize` requires `figratio` but was not"
+            " specified yet.",
         )
     elif len(figsize) == 1:
         figratio = _parse_figratio(figratio)
@@ -541,7 +553,7 @@ def _parse_figsize(figsize, figratio):
 
     if sizetuple is None:
         raise ValueError(
-            'figsize needs to be an numeric value or a tuple, not ' +
-            '{0}.'.format(figsize),
+            "figsize needs to be an numeric value or a tuple, not "
+            + "{0}.".format(figsize),
         )
     return sizetuple
